@@ -1,0 +1,5 @@
+The package OpenLDAP provides CMake variables:
+
+    find_package(OpenLDAP REQUIRED)
+    target_include_directories(main PRIVATE ${OPENLDAP_INCLUDE_DIR})
+    target_link_libraries(main PRIVATE ${OPENLDAP_LIBRARIES})
