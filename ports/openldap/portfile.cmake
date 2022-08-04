@@ -18,7 +18,12 @@ vcpkg_configure_make(
         --disable-slapd
         --with-tls=openssl
         --without-cyrus-sasl
-        "LIBS=-ldl"
+        --without-systemd
+        --without-fetch
+        --without-argon2
+        ac_cv_lib_iodbc_SQLDriverConnect=no
+        ac_cv_lib_odbc_SQLDriverConnect=no
+        ac_cv_lib_odbc32_SQLDriverConnect=no
 )
 
 vcpkg_build_make(BUILD_TARGET depend LOGFILE_ROOT depend)
