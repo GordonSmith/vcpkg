@@ -11,15 +11,9 @@ vcpkg_extract_source_archive_ex(
         openssl.patch
 )
 
-execute_process(
-    COMMAND aclocal
-    COMMAND libtoolize
-    COMMAND autoreconf
-    WORKING_DIRECTORY ${SOURCE_PATH}
-)
-
 vcpkg_configure_make(
     SOURCE_PATH "${SOURCE_PATH}"
+    AUTOCONFIG
     OPTIONS
         --disable-slapd
         --with-tls=openssl
