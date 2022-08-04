@@ -9,12 +9,19 @@ vcpkg_extract_source_archive_ex(
     ARCHIVE "${ARCHIVE}"
     PATCHES
         openssl.patch
+        subdirs.patch
 )
+
+vcpkg_list(SET FEATURE_OPTIONS)
+if("tools" IN_LIST FEATURES)
+    vcpkg_list(APPEND FEATURE_OPTIONS --enable-tools)
+endif()
 
 vcpkg_configure_make(
     SOURCE_PATH "${SOURCE_PATH}"
     AUTOCONFIG
     OPTIONS
+        ${FEATURE_OPTIONS}
         --disable-slapd
         --with-tls=openssl
         --without-cyrus-sasl
@@ -32,7 +39,5 @@ vcpkg_fixup_pkgconfig()
 vcpkg_copy_pdbs()
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share")
-file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/var")
-file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/var")
 
 file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/openldap" RENAME copyright)
