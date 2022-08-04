@@ -17,6 +17,9 @@ if("tools" IN_LIST FEATURES)
     vcpkg_list(APPEND FEATURE_OPTIONS --enable-tools)
 endif()
 
+# Disable build environment details in binaries
+set(ENV{SOURCE_DATE_EPOCH} "1659614616")
+
 vcpkg_configure_make(
     SOURCE_PATH "${SOURCE_PATH}"
     AUTOCONFIG
