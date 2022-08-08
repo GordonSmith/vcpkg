@@ -4,12 +4,13 @@ vcpkg_download_distfile(ARCHIVE
     SHA512 30fdc884b513c53169910eec377c2ad05013b9f06bab3123d50d028108b24548791f7f47f18bcb3a2b4868edeab02c10d81ffa320c02d7b562f2e8f2fa25d6c9
 )
 
-vcpkg_list(SET PATCHES)
-# # Check libtool version matches the one used by openldap to create the pkg-config macros
-# execute_process(COMMAND libtool --version OUTPUT_VARIABLE LIBTOOL_VERSION_STR)
-# if (NOT "${LIBTOOL_VERSION_STR}" STREQUAL "" AND NOT "${LIBTOOL_VERSION_STR}" MATCHES ".*2\\.4\\.6.*")
-#     set(FORCE_AUTOCONFIG AUTOCONFIG)
-# endif ()
+vcpkg_list(SET EXTRA_PATCHES)
+
+# Check autoconf version < 2.70
+execute_process(COMMAND autoconf --version OUTPUT_VARIABLE AUTOCONF_VERSION_STR)
+if(NOT "${AUTOCONF_VERSION_STR}" STREQUAL "" AND "${AUTOCONF_VERSION_STR}" MATCHES ".*2\\.[0-6].*")
+    vcpkg_list(APPEND EXTRA_PATCHES m4.patch)
+endif()
 
 vcpkg_extract_source_archive_ex(
     OUT_SOURCE_PATH SOURCE_PATH
@@ -17,10 +18,11 @@ vcpkg_extract_source_archive_ex(
     PATCHES
         openssl.patch
         subdirs.patch
-        m4.patch
-)       
- 
+        ${EXTRA_PATCHES}
+)
+
 vcpkg_list(SET FEATURE_OPTIONS)
+
 if("tools" IN_LIST FEATURES)
     vcpkg_list(APPEND FEATURE_OPTIONS --enable-tools)
 endif()
