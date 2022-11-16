@@ -1,0 +1,7 @@
+buildtrees/
+dockerfiles/
+docs/
+downloads/
+packages/
+vcpkg_installed/
+.env
