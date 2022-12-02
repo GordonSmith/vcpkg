@@ -36,6 +36,7 @@
                 "bzip2"
             ]
         },
+        "libcouchbase",
         "libevent",
         "libgit2",
         {
