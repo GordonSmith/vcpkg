@@ -37,6 +37,7 @@
             ]
         },
         "libcouchbase",
+        "libcouchbase-cxx",
         "libevent",
         "libgit2",
         {

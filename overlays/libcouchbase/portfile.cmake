@@ -1,21 +1,27 @@
-set(VERSION 3.3.2)
+set(VERSION 2.9.3)
 
 vcpkg_from_github(
   OUT_SOURCE_PATH SOURCE_PATH
   REPO couchbase/libcouchbase
-  REF 3.3.2
-  SHA512 e7a4e3ff2bdb2ecc0711c3b3edc5f938c1bb40cfd4a1f9b7638e9bdbbda65583587a710f0e3f3407b52c46e3fea291835258113f68527769fccc03c51ddf8cb2
+  REF 2.9.3
+  SHA512 79b842967beaec0f26244b8ea18fa588d00356e04c47c052234cb15a2b3b1b2134e9d8cad5f5c1958321ec0c762b59785d37b2ac275e80eab5693b7dd252bceb
   HEAD_REF master
 )
+
+# file(
+#     COPY ${CMAKE_CURRENT_LIST_DIR}/FindLibCouchbase.cmake
+#     DESTINATION ${SOURCE_PATH}/cmake/Modules
+# )
 
 vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
         -DLCB_NO_TESTS=ON
-        -DLCB_NO_TOOLS=ON        
+        -DLCB_NO_TOOLS=ON
 )
 vcpkg_cmake_install()
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
+file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share")
    
-file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/libcouchbase" RENAME copyright)
+file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)

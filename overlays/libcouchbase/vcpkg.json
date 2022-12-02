@@ -1,6 +1,6 @@
 {
   "name": "libcouchbase",
-  "version-semver": "3.3.2",
+  "version-semver": "2.9.3",
   "homepage": "https://github.com/couchbase/libcouchbase",
   "description": "This is the C client library for Couchbase It communicates with the cluster and speaks the relevant protocols necessary to connect to the cluster and execute data operations.",
   "dependencies": [
