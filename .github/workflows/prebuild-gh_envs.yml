@@ -6,7 +6,7 @@ env:
 on:
   push:
     branches:
-      - "hpcc-platform-8.12.x"
+      - "hpcc-platform-*"
       - "TEST"
 
   workflow_dispatch:
