@@ -7,7 +7,11 @@
         "apr-util",
         {
             "name": "arrow",
-            "platform": "!windows"
+            "platform": "!windows",
+            "default-features": false,
+            "features": [
+                "parquet"
+            ]
         },
         {
             "name": "aws-sdk-cpp",
