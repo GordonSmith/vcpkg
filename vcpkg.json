@@ -6,6 +6,10 @@
         "apr",
         "apr-util",
         {
+            "name": "arrow",
+            "platform": "!windows"
+        },
+        {
             "name": "aws-sdk-cpp",
             "default-features": false,
             "features": [
