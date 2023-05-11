@@ -1,12 +1,9 @@
-vcpkg_download_distfile(
-    ARCHIVE_PATH
-    URLS "https://archive.apache.org/dist/arrow/arrow-${VERSION}/apache-arrow-${VERSION}.tar.gz"
-    FILENAME apache-arrow-${VERSION}.tar.gz
-    SHA512 f815be4fb20b6001ba5525270765fe239b5468708a7be34b93b60ee0ce63464727d183c9756fbc33bffd199019e1f06a7fddd306ce8388435cea7771070a2ca9
-)
-vcpkg_extract_source_archive(
-    SOURCE_PATH
-    ARCHIVE ${ARCHIVE_PATH}
+vcpkg_from_github(
+    OUT_SOURCE_PATH SOURCE_PATH
+    REPO jackdelv/arrow
+    REF main
+    SHA512 ec1a9c2422a6427106b317719d98a9807777274121bd0439635fa48fb86d948d2fad54f30edfa89c25b8e373fa558da842952478b69841e18fcab7fbec1a7eee
+    HEAD_REF main
     PATCHES
         msvc-static-name.patch
         utf8proc.patch
