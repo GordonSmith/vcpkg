@@ -1,4 +1,4 @@
-FROM ubuntu:18.04 AS base_build
+FROM ubuntu:23.10 AS base_build
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -19,7 +19,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg \
     groff-base \
     libtool \
-    linux-generic \
     pkg-config \
     software-properties-common \
     tar \
@@ -30,9 +29,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 FROM base_build AS vcpkg_build
 
 # Build Tools - Mono  ---
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-RUN sh -c 'echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" > /etc/apt/sources.list.d/mono-official-stable.list'
-RUN apt-get update
 RUN apt-get install -y mono-complete
 
 ARG NUGET_MODE=readwrite
@@ -75,6 +71,21 @@ RUN cp -r $(dirname $(dirname `./vcpkg fetch node | tail -n 1`))/* /hpcc-dev/too
 
 FROM base_build
 
+
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    ccache \
+    default-jdk \
+    ninja-build \
+    python3-dev \
+    rsync \
+    fop \
+    libsaxonb-java \
+    r-base \
+    r-cran-rcpp \
+    r-cran-rinside \
+    r-cran-inline && \
+    git config --global --add safe.directory '*'
+
 WORKDIR /hpcc-dev
 
 COPY --from=vcpkg_build /hpcc-dev/build/vcpkg_installed /hpcc-dev/vcpkg_installed
@@ -87,3 +98,7 @@ RUN cp -rs /hpcc-dev/tools/cmake/bin /usr/local/ && \
     cp -rs /hpcc-dev/tools/node/include /usr/local/ && \
     cp -rs /hpcc-dev/tools/node/lib /usr/local/ && \
     cp -rs /hpcc-dev/tools/node/share /usr/local/
+
+ENTRYPOINT ["/bin/bash", "--login", "-c"]
+
+CMD ["/bin/bash"]
