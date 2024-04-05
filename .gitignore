@@ -327,3 +327,4 @@ pythonenv3.8/
 # hpcc
 ###################
 .env
+/vcpkg_*/
